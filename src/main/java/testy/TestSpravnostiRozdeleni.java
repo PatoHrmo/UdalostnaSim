@@ -1,10 +1,13 @@
-package util;
+package testy;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-public class Test {
+import util.ExpGenerator;
+import util.TriangleGenerator;
+
+public class TestSpravnostiRozdeleni {
 
 	public static void main(String[] args) {
 		ExpGenerator gen = new ExpGenerator(0, 4);

@@ -4,6 +4,7 @@ public abstract class Udalost implements Comparable<Udalost> {
 	private final double casUdalosti;
 	private final SimulacneJadro mojaSimulacia;
 	
+	
 	public Udalost(double casUdalosti, SimulacneJadro mojaSimulacia) {
 		this.casUdalosti = casUdalosti;
 		this.mojaSimulacia = mojaSimulacia;
@@ -24,5 +25,8 @@ public abstract class Udalost implements Comparable<Udalost> {
 	}
 	public String toString() {
 		return "Cas Udalosti: "+casUdalosti;
+	}
+	protected SimulacneJadro getMojaSimulacia() {
+		return mojaSimulacia;
 	}
 }

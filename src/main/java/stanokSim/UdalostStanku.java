@@ -16,7 +16,7 @@ public abstract class UdalostStanku extends Udalost {
 	Zakaznik getZakaznik() {
 		return this.zakaznik;
 	}
-	SimulaciaStanku getMojaSimulacia() {
+	public SimulaciaStanku getMojaSimulacia() {
 		return mojeJadro;
 	}
 	protected abstract void execute();

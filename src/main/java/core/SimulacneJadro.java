@@ -22,12 +22,8 @@ public abstract class SimulacneJadro {
     void vykonajUdalostnuSimulaciu(double doKedy){
     	nastartujSimulaciu();
     	Udalost pomUdalost;
-    	long pocetUdalosti = 0;
     	while(!kalendarUdalosti.isEmpty() && simulacnyCas<doKedy && prebieha) {
-    		pocetUdalosti++;
-    		if(pocetUdalosti%100000000==0) {
-    			System.out.println(pocetUdalosti);
-    		}
+    		
     		pomUdalost = kalendarUdalosti.poll();
     		trvanieSimulacie+=pomUdalost.getCasUdalosti()-simulacnyCas;
     		simulacnyCas = pomUdalost.getCasUdalosti();

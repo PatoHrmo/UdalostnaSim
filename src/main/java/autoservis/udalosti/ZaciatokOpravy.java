@@ -12,6 +12,7 @@ public class ZaciatokOpravy extends UdalostServis {
 
 	@Override
 	public void execute() {
+		
 		getMojaSimulaciaServisu().zamestnajRobotnika2();
 		getMojaSimulaciaServisu().naplanujUdalost(
 				new KoniecOpravy(getCasUdalosti()+getOprava().getDlzkaOpravy(), getMojaSimulaciaServisu(), getOprava()));

@@ -12,6 +12,7 @@ public class KoniecPreparkovaniaDoDielne extends UdalostServis {
 
 	@Override
 	public void execute() {
+		
 		getMojaSimulaciaServisu().uvolniRobotnika1();
 		// planovanie zacatia opravy ak je robotnik volny
 		if(getMojaSimulaciaServisu().jeVolnyRobotnik2() && getMojaSimulaciaServisu().getPocetPokazenychAutVoFronte()==0) {

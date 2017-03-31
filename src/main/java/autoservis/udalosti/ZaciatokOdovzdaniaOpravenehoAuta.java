@@ -12,6 +12,7 @@ public class ZaciatokOdovzdaniaOpravenehoAuta extends UdalostServis {
 
 	@Override
 	public void execute() {
+		
 		getMojaSimulaciaServisu().naplanujUdalost(
 				new KoniecOdovzdaniaOpravenehoAuta(
 						getCasUdalosti()+getMojaSimulaciaServisu().getCasOdovzdavaniaHotovehoAutaZakaznikovy(),

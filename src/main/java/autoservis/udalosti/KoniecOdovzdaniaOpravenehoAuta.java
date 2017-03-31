@@ -12,6 +12,7 @@ public class KoniecOdovzdaniaOpravenehoAuta extends UdalostServis {
 
 	@Override
 	public void execute() {
+		
 		getMojaSimulaciaServisu().uvolniRobotnika1();
 		getOprava().setKoniecCakaniaNaOpravuOdovzdanehoAuta(getCasUdalosti());
 		//getOprava().vypis();

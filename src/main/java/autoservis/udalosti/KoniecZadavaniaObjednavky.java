@@ -12,6 +12,7 @@ public class KoniecZadavaniaObjednavky extends UdalostServis {
 
 	@Override
 	public void execute() {
+		
 		getOprava().setDlzkaOpravy(getMojaSimulaciaServisu().getCasOpravy());
 		getMojaSimulaciaServisu().naplanujUdalost(
 				new ZaciatokPrevzatiaAuta(getCasUdalosti(), getMojaSimulaciaServisu(), getOprava()));

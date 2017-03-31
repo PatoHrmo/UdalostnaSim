@@ -12,7 +12,7 @@ public class ZaciatokZadavaniaObjednavky extends UdalostServis {
 
 	@Override
 	public void execute() {
-		System.out.println("zaciatok zad objednavky");
+		
 		getMojaSimulaciaServisu().zamestnajRobotnika1();
 		getOprava().setKoniecCakaniaVoFronteZakaznikov(getCasUdalosti());
 		getMojaSimulaciaServisu().naplanujUdalost(

@@ -9,6 +9,7 @@ import core.SimulacneJadro;
 import util.DobaOpravyGen;
 import util.EmpGenerator;
 import util.ExpGenerator;
+import util.RovnomernyGenerator;
 import util.TriangleGenerator;
 
 public class AutoServisSim extends SimulacneJadro {
@@ -18,11 +19,11 @@ public class AutoServisSim extends SimulacneJadro {
 	private int pocetRobotnikov1;
 	private int pocetRobotnikov2;
 	private ExpGenerator genPrichoduVSekundach;
-	private TriangleGenerator genCasuZadavaniaObjednavky;
-	private TriangleGenerator genCasuPrevzatiaAuta;
+	private RovnomernyGenerator genCasuZadavaniaObjednavky;
+	private RovnomernyGenerator genCasuPrevzatiaAuta;
 	private TriangleGenerator genCasuPreparkovaniaDoDielne;
 	private TriangleGenerator genCasuPreparkovaniaZDielne;
-	private TriangleGenerator genCasuOdovzdaniaAuta;
+	private RovnomernyGenerator genCasuOdovzdaniaAuta;
 	private DobaOpravyGen genDlzkaOpravy;
 	private EmpGenerator genPocetOprav;
 	public AutoServisSim(double simulacnyCas,int pocetRobotnikov1, int pocetRobotnikov2) {
@@ -34,11 +35,11 @@ public class AutoServisSim extends SimulacneJadro {
 		this.pocetRobotnikov2 = pocetRobotnikov2;
 		Random genNasad = new Random(0);
 		genPrichoduVSekundach = new ExpGenerator(genNasad.nextLong(), 5*60);
-		genCasuOdovzdaniaAuta = new TriangleGenerator(genNasad.nextLong(), 123, 257, 190);
+		genCasuOdovzdaniaAuta = new RovnomernyGenerator(genNasad.nextLong(), 123, 257);
 		genCasuPreparkovaniaDoDielne = new TriangleGenerator(genNasad.nextLong(), 120, 540,240);
 		genCasuPreparkovaniaZDielne = new TriangleGenerator(genNasad.nextLong(), 120, 540, 240);
-		genCasuPrevzatiaAuta = new  TriangleGenerator(genNasad.nextLong(), 80, 160, 120);
-		genCasuZadavaniaObjednavky = new TriangleGenerator(genNasad.nextLong(), 70, 310, 190);
+		genCasuPrevzatiaAuta = new  RovnomernyGenerator(genNasad.nextLong(), 80, 160);
+		genCasuZadavaniaObjednavky = new RovnomernyGenerator(genNasad.nextLong(), 70, 310);
 		genDlzkaOpravy = new DobaOpravyGen(genNasad.nextLong());
 		LinkedList<double[]> poctyOprav = new LinkedList<>();
 		poctyOprav.add(new double[]{1,0.4});
@@ -52,7 +53,6 @@ public class AutoServisSim extends SimulacneJadro {
 	@Override
 	protected void nastartujSimulaciu() {
 		naplanujUdalost(new PrichodZakaznika(0, this, null));
-
 	}
 	public void pridajZakaznikaDoFrontu(Oprava zakaznik) {
 		frontaZakaznikov.add(zakaznik);
@@ -111,10 +111,10 @@ public class AutoServisSim extends SimulacneJadro {
 		return genPrichoduVSekundach.nextExp();
 	}
 	public double getCasZadavaniaObjednavky() {
-		return genCasuZadavaniaObjednavky.nextTria();
+		return genCasuZadavaniaObjednavky.next();
 	}
 	public double getCasPrevzatiaAutaOdZakaznika(){
-		return genCasuPrevzatiaAuta.nextTria();
+		return genCasuPrevzatiaAuta.next();
 	}
 	public double getCasPreparkovaniaDoDielne() {
 		return genCasuPreparkovaniaDoDielne.nextTria();
@@ -131,7 +131,7 @@ public class AutoServisSim extends SimulacneJadro {
 		return casOpravy*60;
 	}
 	public double getCasOdovzdavaniaHotovehoAutaZakaznikovy() {
-		return genCasuOdovzdaniaAuta.nextTria();
+		return genCasuOdovzdaniaAuta.next();
 	}
 
 }

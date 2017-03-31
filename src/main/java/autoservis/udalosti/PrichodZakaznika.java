@@ -16,6 +16,7 @@ public class PrichodZakaznika extends UdalostServis {
 
 	@Override
 	public void execute() {
+		
 		naplanujPrichodZakaznika();
 		
 		this.setOprava(new Oprava());

@@ -12,6 +12,7 @@ public class KoniecOpravy extends UdalostServis {
 
 	@Override
 	public void execute() {
+		
 		getMojaSimulaciaServisu().uvolniRobotnika2();
 		// naplanuj dalsiu opravu ak su pokazene auta vo fronte
 		if(getMojaSimulaciaServisu().getPocetPokazenychAutVoFronte()>1) {

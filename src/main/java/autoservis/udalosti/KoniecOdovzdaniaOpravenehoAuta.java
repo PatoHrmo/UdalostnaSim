@@ -12,9 +12,9 @@ public class KoniecOdovzdaniaOpravenehoAuta extends UdalostServis {
 
 	@Override
 	public void execute() {
-		
-		getMojaSimulaciaServisu().uvolniRobotnika1();
 		getOprava().setKoniecCakaniaNaOpravuOdovzdanehoAuta(getCasUdalosti());
+		getMojaSimulaciaServisu().pridajCasCakaniaNaPrevzatieOpravenehoAuta(getOprava().getDlzkaCakaniaNaOpravuAuta());
+		getMojaSimulaciaServisu().uvolniRobotnika1();
 		//getOprava().vypis();
 		// ak je hotove auto zacneme ho odovzdavat
 		if(getMojaSimulaciaServisu().getPocetOpravenychAutVoFronte()>0) {

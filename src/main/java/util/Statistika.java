@@ -3,12 +3,10 @@ package util;
 public class Statistika {
 	private double sucet;
 	private int pocetCisel;
-	private double priemer;
 	private double sucetNaDruhu;
 	public Statistika() {
 		sucet = 0;
 		pocetCisel = 0;
-		priemer = 0;
 		sucetNaDruhu = 0;
 	}
 	/**
@@ -34,6 +32,11 @@ public class Statistika {
 	}
 	public double getSmerodajnaOdchylka() {
 		return Math.sqrt(getRozptyl());
+	}
+	public void reset(){
+		sucet = 0;
+		pocetCisel = 0;
+		sucetNaDruhu = 0;
 	}
 
 }

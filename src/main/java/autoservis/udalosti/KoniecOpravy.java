@@ -12,10 +12,9 @@ public class KoniecOpravy extends UdalostServis {
 
 	@Override
 	public void execute() {
-		
 		getMojaSimulaciaServisu().uvolniRobotnika2();
 		// naplanuj dalsiu opravu ak su pokazene auta vo fronte
-		if(getMojaSimulaciaServisu().getPocetPokazenychAutVoFronte()>1) {
+		if(getMojaSimulaciaServisu().getPocetPokazenychAutVoFronte()>0) {
 			getMojaSimulaciaServisu().naplanujUdalost(
 					new ZaciatokOpravy(getCasUdalosti(), getMojaSimulaciaServisu(),
 							getMojaSimulaciaServisu().zoberPokazeneAutoZFrontu()));
@@ -27,7 +26,6 @@ public class KoniecOpravy extends UdalostServis {
 		} else {
 			getMojaSimulaciaServisu().pridajAutoDoFrontuOpravenych(getOprava());
 		}
-
 	}
 
 }

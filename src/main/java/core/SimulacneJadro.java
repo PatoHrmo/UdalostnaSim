@@ -1,43 +1,60 @@
 package core;
 
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public abstract class SimulacneJadro {
-	private int pocetIteracii;
 	private double simulacnyCas;
 	private boolean prebieha;
 	private double trvanieSimulacie;
+	private boolean turboMod;
 	private PriorityQueue<Udalost> kalendarUdalosti;
-	public SimulacneJadro(double simulacnyCas) {
-		pocetIteracii=0;
+	private boolean pauza;
+	private List<PozorovatelSimulacie> pozorovatelia;
+	private int dlzkaSpanku;
+	private int pocetSekundSimulacnehoCasuMedziAnimaciamy;
+	public SimulacneJadro(double simulacnyCas, boolean turboMod) {
 		this.simulacnyCas = simulacnyCas;
 		prebieha = true;
 		kalendarUdalosti = new PriorityQueue<Udalost>();
 		trvanieSimulacie=0;
+		pauza = false;
+		pozorovatelia = new LinkedList<>();
+		this.turboMod = turboMod;
+		dlzkaSpanku = 1000;
+		pocetSekundSimulacnehoCasuMedziAnimaciamy=5;
 	}
 	/**
 	 * vykoná pokus danného monte carla NEIKREMENTOVAT pocet iteracii
 	 */
-    void vykonajUdalostnuSimulaciu(double doKedy){
+    protected void vykonajUdalostnuSimulaciu(double doKedy){
     	nastartujSimulaciu();
+    	if(!turboMod) {
+    		naplanujSystemovuUdalostAnimacie();
+    	}
     	Udalost pomUdalost;
-    	while(!kalendarUdalosti.isEmpty() && simulacnyCas<doKedy && prebieha) {
-    		
+    	while(!kalendarUdalosti.isEmpty() && simulacnyCas<=doKedy && prebieha) {
+    		while(pauza) {
+    			try {
+					Thread.sleep(250);
+				} catch (InterruptedException e) {
+					System.out.println("chyba v pauze v sim jadre");
+					e.printStackTrace();
+				}
+    		}
     		pomUdalost = kalendarUdalosti.poll();
     		trvanieSimulacie+=pomUdalost.getCasUdalosti()-simulacnyCas;
     		simulacnyCas = pomUdalost.getCasUdalosti();
-    		//vypisStav();
-    		//System.out.println("momentalne sa spracuvava udalost "+pomUdalost.toString());
-    		
     		pomUdalost.execute();
-    		//System.out.println("po vykonani tejto udalosti vyzera kalendar takto");
-    		//System.out.println();
-    		//vypisStav();
-    		//System.out.println("-------------------------------");
+    		refreshGUI();
     	}
     }
-    protected abstract void nastartujSimulaciu();
+    private void naplanujSystemovuUdalostAnimacie() {
+    	naplanujUdalost(new AnimacnaUdalost(pocetSekundSimulacnehoCasuMedziAnimaciamy, this, dlzkaSpanku));
+	}
+	protected abstract void nastartujSimulaciu();
 	public void naplanujUdalost(Udalost udalost) {
     	if(udalost.getCasUdalosti()<simulacnyCas) {
     		System.out.println("udalost sa mala vyskytnut v minulosti program konci");
@@ -45,24 +62,55 @@ public abstract class SimulacneJadro {
     	}
     	kalendarUdalosti.add(udalost);
     }
-    public void vykonajReplikaciu(double dokedy){
-    	vykonajUdalostnuSimulaciu(dokedy);
-    	pocetIteracii++;
-    }
-	public int getPocetIteracii() {
-		return pocetIteracii;
-	}
+    
 	public double getSimulacnyCas() {
 		return simulacnyCas;
 	}
-	public void vypisStav() {
-		System.out.println("kalendar udalosti v case "+getSimulacnyCas()+" vyzera takto:");
-		for(Udalost udalost : kalendarUdalosti) {
-			System.out.println(udalost.toString());
-		}
-		System.out.println();
-	}
 	public double getTrvanieSimulacie() {
 		return trvanieSimulacie;
+	}
+	public void pozastav() {
+		pauza= true;
+	} 
+	public void pokracuj() {
+		pauza = false;
+	}
+	public void zastav() {
+		prebieha = false;
+	}
+	public void pridajPozorovatela(PozorovatelSimulacie pozorovatel) {
+		pozorovatelia.add(pozorovatel);
+	}
+	public void refreshGUI() {
+		for(PozorovatelSimulacie pozorovatel : pozorovatelia) {
+			pozorovatel.refresh(this);
+		}
+	}
+	public boolean isTurboMode() {
+		return turboMod;
+	}
+	public void nastavRychlost(int cas) {
+		this.dlzkaSpanku = cas;
+	}
+	class AnimacnaUdalost extends Udalost {
+		private int dobaSpanku;
+		public AnimacnaUdalost(double casUdalosti, SimulacneJadro mojaSimulacia, int dobaSpankuVMilisekundach) {
+			super(casUdalosti, mojaSimulacia);
+			dobaSpanku = dobaSpankuVMilisekundach;
+		}
+
+		@Override
+		protected void execute() {
+			naplanujUdalost(new AnimacnaUdalost(pocetSekundSimulacnehoCasuMedziAnimaciamy+getSimulacnyCas(), getMojaSimulacia(), dlzkaSpanku));
+			try {
+				refreshGUI();
+				Thread.sleep(dobaSpanku);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
 	}
 }

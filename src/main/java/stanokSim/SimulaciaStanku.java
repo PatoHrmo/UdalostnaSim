@@ -19,7 +19,7 @@ public class SimulaciaStanku extends SimulacneJadro {
 	private double predoslyCasZmenyFronty;
 	private int predoslaVelkostFrontu;
 	public SimulaciaStanku(double simulacnyCas, long seed) {
-		super(simulacnyCas);
+		super(simulacnyCas, false);
 		genSeedov = new Random(seed);
 		genPrichodu = new ExpGenerator(genSeedov.nextLong(), 5);
 		genCasuObsluhy = new ExpGenerator(genSeedov.nextLong(), 4);

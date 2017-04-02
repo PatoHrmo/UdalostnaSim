@@ -12,7 +12,7 @@ public class KoniecPreparkovaniaZDielne extends UdalostServis {
 
 	@Override
 	public void execute() {
-		
+		getMojaSimulaciaServisu().setPocetPracovnikovPreparkujucichAutaZDielne(getMojaSimulaciaServisu().getPocetPracovnikovPreparkujucichAutaZDielne()-1);
 		getMojaSimulaciaServisu().naplanujUdalost(
 				new ZaciatokOdovzdaniaOpravenehoAuta(getCasUdalosti(), getMojaSimulacia(), getOprava()));
 

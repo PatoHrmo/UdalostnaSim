@@ -48,7 +48,7 @@ public abstract class SimulacneJadro {
     		trvanieSimulacie+=pomUdalost.getCasUdalosti()-simulacnyCas;
     		simulacnyCas = pomUdalost.getCasUdalosti();
     		pomUdalost.execute();
-    		refreshGUI();
+    		if(!turboMod)refreshGUI();
     	}
     }
     private void naplanujSystemovuUdalostAnimacie() {

@@ -10,6 +10,7 @@ public class Oprava {
 	private double koniecCakaniaNaOpravuOdovydanehoAuta;
 	private boolean nastavenyKoniecCakaniaNaOpravuOdovydanehoAuta;
 	private double dlzkaOpravy;
+	private double odchod;
 	
 	public Oprava() {
 		nastavenyKoniecCakaniaNaOpravuOdovydanehoAuta = false;
@@ -65,6 +66,12 @@ public class Oprava {
 	}
 	public void setDlzkaOpravy(double dlzkaOpravy) {
 		this.dlzkaOpravy = dlzkaOpravy;
+	}
+	public void setCasOdchoduZoSystemu(double cas)  {
+		odchod = cas;
+	}
+	public double getCasVServise() {
+		return odchod - zaciatokCakaniaVoFronteZakaznikov;
 	}
 	@Override
 	public String toString() {

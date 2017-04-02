@@ -16,7 +16,7 @@ public class NovaReplikacia extends UdalostServis {
 		getMojaSimulaciaServisu().resetujStatistiky();
 		getMojaSimulaciaServisu().naplanujUdalost(new NovaReplikacia(getCasUdalosti()+8*60*60*90, getMojaSimulaciaServisu(), null));
 		pocet++;
-		if(pocet%50==0)
+		if(pocet%100==0)
 		getMojaSimulaciaServisu().refreshGUI();
 	}
 

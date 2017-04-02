@@ -37,6 +37,7 @@ public class AutoServisSim extends SimulacneJadro {
 	private Statistika priemDlzkaFrontuZakaznikovNaKonciDna;
 	private Statistika priemDlzkaFrontuNeopravenychAutNaKonciDna;
 	private Statistika priemDlzkaFrontuOpravenychAutNaKonciDna;
+	private Statistika priemDlzkaVServise;
 	private VazenyPriemer priemPocetVolnychPracovnikov1;
 	private VazenyPriemer priemPocetVolnychPracovnikov2;
 	private VazenyPriemer priemDlzkaFrontuZakaznikov;
@@ -53,6 +54,7 @@ public class AutoServisSim extends SimulacneJadro {
 	private Statistika replPriemDlzkaFrontuZakaznikov;
 	private Statistika replPriemDlzkaFrontuNeopravenychAut;
 	private Statistika replPriemDlzkaFrontuOpravenychAut;
+	private Statistika replPriemDlzkaVServise;
 	private int pocetVolnychZamestnancov1PredZmenou;
 	private int pocetVolnychZamestnancov2PredZmenou;
 	private int dlzkaFrontuZakaznikovPredZmenou;
@@ -63,7 +65,11 @@ public class AutoServisSim extends SimulacneJadro {
 	private double casMinulehoZaznamuDlzkyFrontuZakaznikov;
 	private double casMinulehoZaznamuDlzkyFrontuNeopravenychAut;
 	private double casMinulehoZaznamuDlzkyFrontuOpravenychAut;
-
+	private int pocetPracovnikovZadavajucichObjednavku;
+	private int pocetPracovnikovPrevazajucichAutaOdZakaznikov;
+	private int pocetPracovnikovPreparkujucichAutaDoDielne;
+	private int pocetPracovnikovPreparkujucichAutaZDielne;
+	private int pocetPracovnikovOdovzdavajucichOpraveneAuta;
 	public AutoServisSim(double simulacnyCas, boolean turboMod, int pocetRobotnikov1, int pocetRobotnikov2) {
 		super(simulacnyCas, turboMod);
 		frontaZakaznikov = new LinkedList<>();
@@ -73,7 +79,7 @@ public class AutoServisSim extends SimulacneJadro {
 		this.aktualnyPocetRobotnikov2 = pocetRobotnikov2;
 		POCET_ROBOTNIKOV1 = pocetRobotnikov1;
 		POCET_ROBOTNIKOV2 = pocetRobotnikov2;
-		Random genNasad = new Random(0);
+		Random genNasad = new Random();
 		genPrichoduVSekundach = new ExpGenerator(genNasad.nextLong(), 5 * 60);
 		genCasuOdovzdaniaAuta = new RovnomernyGenerator(genNasad.nextLong(), 123, 257);
 		genCasuPreparkovaniaDoDielne = new TriangleGenerator(genNasad.nextLong(), 120, 540, 240);
@@ -100,6 +106,7 @@ public class AutoServisSim extends SimulacneJadro {
 		priemDlzkaFrontuZakaznikovNaKonciDna = new Statistika();
 		priemDlzkaFrontuOpravenychAutNaKonciDna = new Statistika();
 		priemDlzkaFrontuNeopravenychAutNaKonciDna = new Statistika();
+		priemDlzkaVServise = new Statistika();
 		replPriemCakanieZakaznikovVoFronte = new Statistika();
 		replPriemCakanieZakaznikovNaOpravu = new Statistika();
 		replPriemDlzkaFrontuZakaznikovNaKonciDna = new Statistika();
@@ -110,6 +117,7 @@ public class AutoServisSim extends SimulacneJadro {
 		replPriemDlzkaFrontuZakaznikov = new Statistika();
 		replPriemDlzkaFrontuNeopravenychAut = new Statistika();
 		replPriemDlzkaFrontuOpravenychAut = new Statistika();
+		replPriemDlzkaVServise = new Statistika();
 		casMinulehoZaznamuPoctuVolnychZamestnancov1 = simulacnyCas;
 		casMinulehoZaznamuPoctuVolnychZamestnancov2 = simulacnyCas;
 		pocetVolnychZamestnancov1PredZmenou = pocetRobotnikov1;
@@ -120,7 +128,14 @@ public class AutoServisSim extends SimulacneJadro {
 		casMinulehoZaznamuDlzkyFrontuZakaznikov = simulacnyCas;
 		casMinulehoZaznamuDlzkyFrontuNeopravenychAut = simulacnyCas;
 		casMinulehoZaznamuDlzkyFrontuOpravenychAut = simulacnyCas;
+		pocetPracovnikovOdovzdavajucichOpraveneAuta=0;
+		pocetPracovnikovPreparkujucichAutaDoDielne = 0;
+		pocetPracovnikovPreparkujucichAutaZDielne = 0;
+		pocetPracovnikovPrevazajucichAutaOdZakaznikov = 0;
+		pocetPracovnikovZadavajucichObjednavku = 0;
 	}
+
+	
 
 	@Override
 	protected void nastartujSimulaciu() {
@@ -131,7 +146,7 @@ public class AutoServisSim extends SimulacneJadro {
 		naplanujUdalost(new NovaReplikacia(dlzkaDnaVSekundach*90, this, null));
 	}
 	public void vykonajPocetReplikacii(int pocetReplikacii) {
-		super.vykonajUdalostnuSimulaciu(pocetReplikacii*8*60*60*90);
+		super.vykonajUdalostnuSimulaciu(pocetReplikacii*8d*60d*60d*90d);
 	}
 
 	public void pridajZakaznikaDoFrontu(Oprava zakaznik) {
@@ -333,6 +348,7 @@ public class AutoServisSim extends SimulacneJadro {
 		replPriemDlzkaFrontuZakaznikovNaKonciDna.pridaj(priemDlzkaFrontuZakaznikovNaKonciDna.getPriemer());
 		replPriemPocetVolnychPracovnikov1.pridaj(priemPocetVolnychPracovnikov1.getPriemer());
 		replPriemPocetVolnychPracovnikov2.pridaj(priemPocetVolnychPracovnikov2.getPriemer());
+		replPriemDlzkaVServise.pridaj(priemDlzkaVServise.getPriemer());
 	}
 
 	public void resetujStatistiky() {
@@ -346,6 +362,7 @@ public class AutoServisSim extends SimulacneJadro {
 		priemDlzkaFrontuZakaznikov.reset();
 		priemPocetVolnychPracovnikov1.reset();
 		priemPocetVolnychPracovnikov2.reset();
+		priemDlzkaVServise.reset();
 	}
 	public double getPriemernaDobaCakaniaVRade(boolean celkovo) {
 		if(celkovo)
@@ -356,6 +373,11 @@ public class AutoServisSim extends SimulacneJadro {
 		if(celkovo)
 		return replPriemCakanieZakaznikovVoFronte.get90IntervalSpolahlivosti();
 		return priemCakanieZakaznikovVoFronte.get90IntervalSpolahlivosti();
+	}
+	public double[] getIsCakaniaNaOpravu(boolean celkovo) {
+		if(celkovo)
+			return replPriemCakanieZakaznikovNaOpravu.get90IntervalSpolahlivosti();
+		return priemCakanieZakaznikovNaOpravu.get90IntervalSpolahlivosti();
 	}
 	public double getPriemernaDobaCakaniaNaOpravu(boolean celkovo) {
 		if(celkovo)
@@ -401,6 +423,58 @@ public class AutoServisSim extends SimulacneJadro {
 		if(celkovo)
 		return replPriemDlzkaFrontuNeopravenychAutNaKonciDna.getPriemer();
 		return priemDlzkaFrontuNeopravenychAutNaKonciDna.getPriemer();
+	}
+	public double getPriemDlzkaVServise(boolean celkovo) {
+		if(celkovo)
+		return replPriemDlzkaVServise.getPriemer();
+		return priemDlzkaVServise.getPriemer();
+	}
+	
+	public int getPocetPracovnikovZadavajucichObjednavku() {
+		return pocetPracovnikovZadavajucichObjednavku;
+	}
+
+	public void setPocetPracovnikovZadavajucichObjednavku(int pocetPracovnikovZadavajucichObjednavku) {
+		this.pocetPracovnikovZadavajucichObjednavku = pocetPracovnikovZadavajucichObjednavku;
+	}
+
+	public int getPocetPracovnikovPrevazajucichAutaOdZakaznikov() {
+		return pocetPracovnikovPrevazajucichAutaOdZakaznikov;
+	}
+
+	public void setPocetPracovnikovPrevazajucichAutaOdZakaznikov(int pocetPracovnikovPrevazajucichAutaOdZakaznikov) {
+		this.pocetPracovnikovPrevazajucichAutaOdZakaznikov = pocetPracovnikovPrevazajucichAutaOdZakaznikov;
+	}
+
+	public int getPocetPracovnikovPreparkujucichAutaDoDielne() {
+		return pocetPracovnikovPreparkujucichAutaDoDielne;
+	}
+
+	public void setPocetPracovnikovPreparkujucichAutaDoDielne(int pocetPracovnikovPreparkujucichAutaDoDielne) {
+		this.pocetPracovnikovPreparkujucichAutaDoDielne = pocetPracovnikovPreparkujucichAutaDoDielne;
+	}
+
+	public int getPocetPracovnikovPreparkujucichAutaZDielne() {
+		return pocetPracovnikovPreparkujucichAutaZDielne;
+	}
+
+	public void setPocetPracovnikovPreparkujucichAutaZDielne(int pocetPracovnikovPreparkujucichAutaZDielne) {
+		this.pocetPracovnikovPreparkujucichAutaZDielne = pocetPracovnikovPreparkujucichAutaZDielne;
+	}
+
+	public int getPocetPracovnikovOdovzdavajucichOpraveneAuta() {
+		return pocetPracovnikovOdovzdavajucichOpraveneAuta;
+	}
+
+	public void setPocetPracovnikovOdovzdavajucichOpraveneAuta(int pocetPracovnikovOdovzdavajucichOpraveneAuta) {
+		this.pocetPracovnikovOdovzdavajucichOpraveneAuta = pocetPracovnikovOdovzdavajucichOpraveneAuta;
+	}
+	public int getPocetPracovnikovOpravujucichAuta() {
+		return POCET_ROBOTNIKOV2-getAktualnyPocetRobotnikov2();
+	}
+
+	public void pridajCasVServise(double casVServise) {
+		priemDlzkaVServise.pridaj(casVServise);
 	}
 
 }

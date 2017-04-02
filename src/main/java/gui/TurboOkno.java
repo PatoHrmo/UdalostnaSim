@@ -148,11 +148,11 @@ public class TurboOkno extends JFrame implements PozorovatelSimulacie {
 		contentPane.add(lblPriemernDkaFrontu_2);
 		
 		JLabel lblPriemernDkaFrontu_3 = new JLabel("Priemern\u00E1 d\u013A\u017Eka frontu opraven\u00FDch \u00E1ut:");
-		lblPriemernDkaFrontu_3.setBounds(10, 287, 376, 14);
+		lblPriemernDkaFrontu_3.setBounds(10, 291, 376, 14);
 		contentPane.add(lblPriemernDkaFrontu_3);
 		
 		JLabel lblPriemernDkaFrontu_4 = new JLabel("Priemern\u00E1 d\u013A\u017Eka frontu opraven\u00FDch \u00E1ut na konci d\u0148a:");
-		lblPriemernDkaFrontu_4.setBounds(10, 312, 376, 14);
+		lblPriemernDkaFrontu_4.setBounds(10, 316, 376, 14);
 		contentPane.add(lblPriemernDkaFrontu_4);
 		
 		btnPauza = new JButton("Pauza");
@@ -168,44 +168,44 @@ public class TurboOkno extends JFrame implements PozorovatelSimulacie {
 		contentPane.add(btnPauza);
 		btnPauza.setEnabled(false);
 		
-		lblCakanieVRade = new JLabel("New label");
+		lblCakanieVRade = new JLabel("");
 		lblCakanieVRade.setBounds(396, 91, 268, 14);
 		contentPane.add(lblCakanieVRade);
 		
-		lblCakanieNaOpravu = new JLabel("New label");
+		lblCakanieNaOpravu = new JLabel("");
 		lblCakanieNaOpravu.setBounds(396, 116, 268, 14);
 		contentPane.add(lblCakanieNaOpravu);
 		
-		lblVolny1 = new JLabel("New label");
+		lblVolny1 = new JLabel("");
 		lblVolny1.setBounds(396, 141, 268, 14);
 		contentPane.add(lblVolny1);
 		
-		lblVolny2 = new JLabel("New label");
+		lblVolny2 = new JLabel("");
 		lblVolny2.setBounds(396, 166, 268, 14);
 		contentPane.add(lblVolny2);
 		
-		lblFrontZakaznikov = new JLabel("New label");
+		lblFrontZakaznikov = new JLabel("");
 		lblFrontZakaznikov.setBounds(396, 191, 268, 14);
 		contentPane.add(lblFrontZakaznikov);
 		
-		lblFrontZakaznikovNaKonciDna = new JLabel("New label");
+		lblFrontZakaznikovNaKonciDna = new JLabel("");
 		lblFrontZakaznikovNaKonciDna.setBounds(396, 216, 268, 14);
 		contentPane.add(lblFrontZakaznikovNaKonciDna);
 		
-		lblFrontNeopravenych = new JLabel("New label");
+		lblFrontNeopravenych = new JLabel("");
 		lblFrontNeopravenych.setBounds(396, 241, 268, 14);
 		contentPane.add(lblFrontNeopravenych);
 		
-		lblFrontNeopravenychNaKonciDna = new JLabel("New label");
+		lblFrontNeopravenychNaKonciDna = new JLabel("");
 		lblFrontNeopravenychNaKonciDna.setBounds(396, 266, 268, 14);
 		contentPane.add(lblFrontNeopravenychNaKonciDna);
 		
-		lblFrontOpravenych = new JLabel("New label");
-		lblFrontOpravenych.setBounds(396, 287, 268, 14);
+		lblFrontOpravenych = new JLabel("");
+		lblFrontOpravenych.setBounds(396, 291, 268, 14);
 		contentPane.add(lblFrontOpravenych); 
 		
-		lblFrontOpravenychNaKonciDna = new JLabel("New label");
-		lblFrontOpravenychNaKonciDna.setBounds(396, 312, 268, 14);
+		lblFrontOpravenychNaKonciDna = new JLabel("");
+		lblFrontOpravenychNaKonciDna.setBounds(396, 316, 268, 14);
 		contentPane.add(lblFrontOpravenychNaKonciDna);
 		
 		JLabel lblPoetReplikci = new JLabel("Po\u010Det replik\u00E1ci\u00ED:");
@@ -249,7 +249,8 @@ public class TurboOkno extends JFrame implements PozorovatelSimulacie {
 	public void refresh(SimulacneJadro simJadro) {
 		lblCakanieVRade.setText(Double.toString(((AutoServisSim)simJadro).getIsCakaniaVRade(true)[0])+" ; "+
 				Double.toString(((AutoServisSim)simJadro).getIsCakaniaVRade(true)[1]));
-		lblCakanieNaOpravu.setText(Double.toString(((AutoServisSim)simJadro).getPriemernaDobaCakaniaNaOpravu(true)));
+		lblCakanieNaOpravu.setText(Double.toString(((AutoServisSim)simJadro).getIsCakaniaNaOpravu(true)[0])+" ; "+
+				Double.toString(((AutoServisSim)simJadro).getIsCakaniaNaOpravu(true)[1]));
 		lblFrontNeopravenych.setText(Double.toString(((AutoServisSim)simJadro).getPriemernaDlzkaFrontuNeopravenychAut(true)));
 		lblFrontNeopravenychNaKonciDna.setText(Double.toString(((AutoServisSim)simJadro).getPriemernaDlzkaFrontuNeopravenychAutNaKonciDna(true)));
 		lblFrontOpravenych.setText(Double.toString(((AutoServisSim)simJadro).getPriemernaDlzkaFrontuOpravenychAut(true)));

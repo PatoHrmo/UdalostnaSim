@@ -45,7 +45,6 @@ public class SledovacieOkno extends JFrame implements PozorovatelSimulacie {
 	private JButton buttonPokracuj;
 	private JLabel lblPomerRychlosti;
 	private int dlzkaSpanku;
-	private JLabel lblCas;
 	private JLabel lblCasSimulacie;
 	private JLabel lblPoetVolnchParcovnkov;
 	private JLabel lblPoetVonchPracovnkov;
@@ -57,6 +56,12 @@ public class SledovacieOkno extends JFrame implements PozorovatelSimulacie {
 	private JLabel lblDlzkaFrontuZakaznikov;
 	private JLabel lblDlzkaFrontuAutCakajucichNaOpravu;
 	private JLabel lblDlzkaFrontuOpravenychAut;
+	private JLabel lblZadavajuciObjednavku;
+	private JLabel lblPrevezmucichAuta;
+	private JLabel lblDoDielne;
+	private JLabel lblOpravujuci;
+	private JLabel lblZdielne;
+	private JLabel lblOdovzdavajuci;
 	/**
 	 * Launch the application.
 	 */
@@ -104,13 +109,36 @@ public class SledovacieOkno extends JFrame implements PozorovatelSimulacie {
 		contentPane.add(textFieldPocet2);
 		textFieldPocet2.setColumns(10);
 		
+		JSlider sliderPomerCasu = new JSlider();
+		sliderPomerCasu.setMinimum(1);
+		sliderPomerCasu.setMaximum(5000);
+		sliderPomerCasu.setValue(1);
+		dlzkaSpanku = 5000-sliderPomerCasu.getValue();
+		sliderPomerCasu.setBounds(433, 57, 539, 23);
+		contentPane.add(sliderPomerCasu);
+		sliderPomerCasu.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				dlzkaSpanku = sliderPomerCasu.getValue();
+				if(dlzkaSpanku==5000) {
+					lblPomerRychlosti.setText("maximum");
+					if(simulacia!=null)
+					simulacia.nastavRychlost(0);
+					return;
+				} else {
+					lblPomerRychlosti.setText("nasobok rychlosti: "+5000d/(5000-dlzkaSpanku));
+				}
+				if(simulacia!=null)
+				simulacia.nastavRychlost(5000-dlzkaSpanku);
+			}
+		});
+		
 		JButton btntart = new JButton("\u0160tart");
 		btntart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btntart.setEnabled(false);
 				simulacia = new AutoServisSim(0,false, Integer.parseInt(textFieldPocet1.getText()), Integer.parseInt(textFieldPocet2.getText()));
 				simulacia.pridajPozorovatela(getOkno());
-				simulacia.nastavRychlost(dlzkaSpanku);
+				simulacia.nastavRychlost(5000-sliderPomerCasu.getValue());
 				worker = new SwingWorker<Void, Void>() {
 
 					@Override
@@ -168,11 +196,11 @@ public class SledovacieOkno extends JFrame implements PozorovatelSimulacie {
 		contentPane.add(lblPriemernDkaFrontu_2);
 		
 		JLabel lblPriemernDkaFrontu_3 = new JLabel("Priemern\u00E1 d\u013A\u017Eka frontu opraven\u00FDch \u00E1ut:");
-		lblPriemernDkaFrontu_3.setBounds(10, 287, 376, 14);
+		lblPriemernDkaFrontu_3.setBounds(10, 291, 376, 14);
 		contentPane.add(lblPriemernDkaFrontu_3);
 		
 		JLabel lblPriemernDkaFrontu_4 = new JLabel("Priemern\u00E1 d\u013A\u017Eka frontu opraven\u00FDch \u00E1ut na konci d\u0148a:");
-		lblPriemernDkaFrontu_4.setBounds(10, 312, 376, 14);
+		lblPriemernDkaFrontu_4.setBounds(10, 316, 376, 14);
 		contentPane.add(lblPriemernDkaFrontu_4);
 		
 		btnPauza = new JButton("Pauza");
@@ -188,44 +216,44 @@ public class SledovacieOkno extends JFrame implements PozorovatelSimulacie {
 		contentPane.add(btnPauza);
 		btnPauza.setEnabled(false);
 		
-		lblCakanieVRade = new JLabel("New label");
+		lblCakanieVRade = new JLabel("");
 		lblCakanieVRade.setBounds(396, 91, 268, 14);
 		contentPane.add(lblCakanieVRade);
 		
-		lblCakanieNaOpravu = new JLabel("New label");
+		lblCakanieNaOpravu = new JLabel("");
 		lblCakanieNaOpravu.setBounds(396, 116, 268, 14);
 		contentPane.add(lblCakanieNaOpravu);
 		
-		lblVolny1 = new JLabel("New label");
+		lblVolny1 = new JLabel("");
 		lblVolny1.setBounds(396, 141, 268, 14);
 		contentPane.add(lblVolny1);
 		
-		lblVolny2 = new JLabel("New label");
+		lblVolny2 = new JLabel("");
 		lblVolny2.setBounds(396, 166, 268, 14);
 		contentPane.add(lblVolny2);
 		
-		lblFrontZakaznikov = new JLabel("New label");
+		lblFrontZakaznikov = new JLabel("");
 		lblFrontZakaznikov.setBounds(396, 191, 268, 14);
 		contentPane.add(lblFrontZakaznikov);
 		
-		lblFrontZakaznikovNaKonciDna = new JLabel("New label");
+		lblFrontZakaznikovNaKonciDna = new JLabel("");
 		lblFrontZakaznikovNaKonciDna.setBounds(396, 216, 268, 14);
 		contentPane.add(lblFrontZakaznikovNaKonciDna);
 		
-		lblFrontNeopravenych = new JLabel("New label");
+		lblFrontNeopravenych = new JLabel("");
 		lblFrontNeopravenych.setBounds(396, 241, 268, 14);
 		contentPane.add(lblFrontNeopravenych);
 		
-		lblFrontNeopravenychNaKonciDna = new JLabel("New label");
+		lblFrontNeopravenychNaKonciDna = new JLabel("");
 		lblFrontNeopravenychNaKonciDna.setBounds(396, 266, 268, 14);
 		contentPane.add(lblFrontNeopravenychNaKonciDna);
 		
-		lblFrontOpravenych = new JLabel("New label");
-		lblFrontOpravenych.setBounds(396, 287, 268, 14);
+		lblFrontOpravenych = new JLabel("");
+		lblFrontOpravenych.setBounds(396, 291, 268, 14);
 		contentPane.add(lblFrontOpravenych); 
 		
-		lblFrontOpravenychNaKonciDna = new JLabel("New label");
-		lblFrontOpravenychNaKonciDna.setBounds(396, 312, 268, 14);
+		lblFrontOpravenychNaKonciDna = new JLabel("");
+		lblFrontOpravenychNaKonciDna.setBounds(396, 316, 268, 14);
 		contentPane.add(lblFrontOpravenychNaKonciDna);
 		
 		JLabel lblPoetReplikci = new JLabel("Po\u010Det replik\u00E1ci\u00ED:");
@@ -263,84 +291,116 @@ public class SledovacieOkno extends JFrame implements PozorovatelSimulacie {
 		contentPane.add(buttonPokracuj);
 		buttonPokracuj.setEnabled(false);
 		
-		JSlider sliderPomerCasu = new JSlider();
-		sliderPomerCasu.setMaximum(5000);
-		sliderPomerCasu.setValue(5000);
-		sliderPomerCasu.setBounds(617, 11, 200, 23);
-		contentPane.add(sliderPomerCasu);
-		sliderPomerCasu.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				dlzkaSpanku = sliderPomerCasu.getValue();
-				if(dlzkaSpanku==0) {
-					lblPomerRychlosti.setText("maximum");
-				} else {
-					lblPomerRychlosti.setText(Double.toString(((double)sliderPomerCasu.getMaximum())/dlzkaSpanku));
-				}
-				if(simulacia!=null)
-				simulacia.nastavRychlost(dlzkaSpanku);
-			}
-		});
-		
 		JLabel lblAktulnyPomerRchlosti = new JLabel("Aktu\u00E1lny pomer r\u00FDchlosti: ");
-		lblAktulnyPomerRchlosti.setBounds(827, 11, 228, 14);
+		lblAktulnyPomerRchlosti.setBounds(617, 11, 228, 14);
 		contentPane.add(lblAktulnyPomerRchlosti);
 		
-		lblPomerRychlosti = new JLabel("New label");
-		lblPomerRychlosti.setBounds(1065, 11, 109, 14);
+		lblPomerRychlosti = new JLabel("");
+		lblPomerRychlosti.setBounds(855, 11, 319, 14);
 		contentPane.add(lblPomerRychlosti);
 		
-		lblCas = new JLabel("Cas :");
-		lblCas.setBounds(617, 45, 67, 14);
-		contentPane.add(lblCas);
-		
-		lblCasSimulacie = new JLabel("New label");
-		lblCasSimulacie.setBounds(693, 45, 481, 14);
+		lblCasSimulacie = new JLabel("");
+		lblCasSimulacie.setBounds(474, 39, 481, 14);
 		contentPane.add(lblCasSimulacie);
 		
 		lblPoetVolnchParcovnkov = new JLabel("Po\u010Det voln\u00FDch parcovn\u00EDkov 1:");
-		lblPoetVolnchParcovnkov.setBounds(693, 91, 199, 14);
+		lblPoetVolnchParcovnkov.setBounds(693, 91, 306, 14);
 		contentPane.add(lblPoetVolnchParcovnkov);
 		
 		lblPoetVonchPracovnkov = new JLabel("Po\u010Det vo\u013En\u00FDch pracovn\u00EDkov 2:");
-		lblPoetVonchPracovnkov.setBounds(693, 116, 199, 14);
+		lblPoetVonchPracovnkov.setBounds(693, 116, 306, 14);
 		contentPane.add(lblPoetVonchPracovnkov);
 		
 		lblDkaFrontuZkaznkov = new JLabel("D\u013A\u017Eka frontu z\u00E1kazn\u00EDkov:");
-		lblDkaFrontuZkaznkov.setBounds(693, 141, 199, 14);
+		lblDkaFrontuZkaznkov.setBounds(693, 141, 306, 14);
 		contentPane.add(lblDkaFrontuZkaznkov);
 		
 		lblDkaFrontuut = new JLabel("D\u013A\u017Eka frontu \u00E1ut \u010Dakaj\u00FAcich na opravu: ");
-		lblDkaFrontuut.setBounds(693, 166, 240, 14);
+		lblDkaFrontuut.setBounds(693, 166, 306, 14);
 		contentPane.add(lblDkaFrontuut);
 		
 		lblDkaFrontuOpravench = new JLabel("D\u013A\u017Eka frontu opraven\u00FDch \u00E1ut:");
-		lblDkaFrontuOpravench.setBounds(693, 191, 240, 14);
+		lblDkaFrontuOpravench.setBounds(693, 191, 306, 14);
 		contentPane.add(lblDkaFrontuOpravench);
 		
-		lblPocetPracovnikov1 = new JLabel("New label");
+		lblPocetPracovnikov1 = new JLabel("");
 		lblPocetPracovnikov1.setBounds(1009, 91, 46, 14);
 		contentPane.add(lblPocetPracovnikov1);
 		
-		lblPocetPracovnikov2 = new JLabel("New label");
+		lblPocetPracovnikov2 = new JLabel("");
 		lblPocetPracovnikov2.setBounds(1009, 116, 46, 14);
 		contentPane.add(lblPocetPracovnikov2);
 		
-		lblDlzkaFrontuZakaznikov = new JLabel("New label");
+		lblDlzkaFrontuZakaznikov = new JLabel("");
 		lblDlzkaFrontuZakaznikov.setBounds(1009, 141, 46, 14);
 		contentPane.add(lblDlzkaFrontuZakaznikov);
 		
-		lblDlzkaFrontuAutCakajucichNaOpravu = new JLabel("New label");
+		lblDlzkaFrontuAutCakajucichNaOpravu = new JLabel("");
 		lblDlzkaFrontuAutCakajucichNaOpravu.setBounds(1009, 166, 46, 14);
 		contentPane.add(lblDlzkaFrontuAutCakajucichNaOpravu);
 		
-		lblDlzkaFrontuOpravenychAut = new JLabel("New label");
+		lblDlzkaFrontuOpravenychAut = new JLabel("");
 		lblDlzkaFrontuOpravenychAut.setBounds(1009, 191, 46, 14);
 		contentPane.add(lblDlzkaFrontuOpravenychAut);
+		
+		JLabel lblPoetPracovnkovZadvajcich = new JLabel("Po\u010Det pracovn\u00EDkov zad\u00E1vaj\u00FAcich objedn\u00E1vku:");
+		lblPoetPracovnkovZadvajcich.setBounds(693, 216, 306, 14);
+		contentPane.add(lblPoetPracovnkovZadvajcich);
+		
+		JLabel lblPoetPracovnkovPrevzacajcich = new JLabel("Po\u010Det pracovn\u00EDkov prevzacaj\u00FAcich aut\u00E1:");
+		lblPoetPracovnkovPrevzacajcich.setBounds(693, 241, 306, 14);
+		contentPane.add(lblPoetPracovnkovPrevzacajcich);
+		
+		JLabel lblPoetPracovnkovPreparkuvajcich = new JLabel("Po\u010Det pracovn\u00EDkov preparkuvaj\u00FAcich aut\u00E1 do dielne:");
+		lblPoetPracovnkovPreparkuvajcich.setBounds(693, 266, 306, 14);
+		contentPane.add(lblPoetPracovnkovPreparkuvajcich);
+		
+		JLabel lblPoetPracovnkovOpravujcich = new JLabel("Po\u010Det pracovn\u00EDkov opravuj\u00FAcich aut\u00E1:");
+		lblPoetPracovnkovOpravujcich.setBounds(693, 291, 306, 14);
+		contentPane.add(lblPoetPracovnkovOpravujcich);
+		
+		JLabel lblPoetPracovnkovPreparkuvajcich_1 = new JLabel("Po\u010Det pracovn\u00EDkov preparkuvaj\u00FAcich aut\u00E1 z dielne:");
+		lblPoetPracovnkovPreparkuvajcich_1.setBounds(693, 316, 306, 14);
+		contentPane.add(lblPoetPracovnkovPreparkuvajcich_1);
+		
+		JLabel lblPoetPracovnkovOdovzdvajcich = new JLabel("Po\u010Det pracovn\u00EDkov odovzd\u00E1vaj\u00FAcich opraven\u00E9 aut\u00E1:");
+		lblPoetPracovnkovOdovzdvajcich.setBounds(693, 341, 306, 14);
+		contentPane.add(lblPoetPracovnkovOdovzdvajcich);
+		
+		lblZadavajuciObjednavku = new JLabel("");
+		lblZadavajuciObjednavku.setBounds(1009, 216, 46, 14);
+		contentPane.add(lblZadavajuciObjednavku);
+		
+		lblPrevezmucichAuta = new JLabel("");
+		lblPrevezmucichAuta.setBounds(1009, 241, 46, 14);
+		contentPane.add(lblPrevezmucichAuta);
+		
+		lblDoDielne = new JLabel("");
+		lblDoDielne.setBounds(1009, 266, 46, 14);
+		contentPane.add(lblDoDielne);
+		
+		lblOpravujuci = new JLabel("");
+		lblOpravujuci.setBounds(1009, 291, 46, 14);
+		contentPane.add(lblOpravujuci);
+		
+		lblZdielne = new JLabel("");
+		lblZdielne.setBounds(1009, 316, 46, 14);
+		contentPane.add(lblZdielne);
+		
+		lblOdovzdavajuci = new JLabel("");
+		lblOdovzdavajuci.setBounds(1009, 341, 46, 14);
+		contentPane.add(lblOdovzdavajuci);
 		dlzkaSpanku = sliderPomerCasu.getValue();
 	}
 
 	@Override
 	public void refresh(SimulacneJadro simJadro) {
+		lblOdovzdavajuci.setText(Integer.toString(((AutoServisSim)simJadro).getPocetPracovnikovOdovzdavajucichOpraveneAuta()));
+		lblZadavajuciObjednavku.setText(Integer.toString(((AutoServisSim)simJadro).getPocetPracovnikovZadavajucichObjednavku()));
+		lblZdielne.setText(Integer.toString(((AutoServisSim)simJadro).getPocetPracovnikovPreparkujucichAutaZDielne()));
+		lblDoDielne.setText(Integer.toString(((AutoServisSim)simJadro).getPocetPracovnikovPreparkujucichAutaDoDielne()));
+		lblPrevezmucichAuta.setText(Integer.toString(((AutoServisSim)simJadro).getPocetPracovnikovPrevazajucichAutaOdZakaznikov()));
+		lblOpravujuci.setText(Integer.toString(((AutoServisSim)simJadro).getPocetPracovnikovOpravujucichAuta()));
 		lblCakanieVRade.setText(Double.toString(((AutoServisSim)simJadro).getIsCakaniaVRade(false)[0])+" ; "+
 				Double.toString(((AutoServisSim)simJadro).getIsCakaniaVRade(false)[1]));
 		lblCakanieNaOpravu.setText(Double.toString(((AutoServisSim)simJadro).getPriemernaDobaCakaniaNaOpravu(false)));

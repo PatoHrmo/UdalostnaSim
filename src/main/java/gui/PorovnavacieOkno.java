@@ -61,7 +61,7 @@ public class PorovnavacieOkno extends JFrame {
 	public PorovnavacieOkno() {
 		setTitle("Porovn\u00E1vanie z\u00E1visloti");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1200, 500);
+		setBounds(100, 100, 1063, 500);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -81,13 +81,13 @@ public class PorovnavacieOkno extends JFrame {
 					protected Void doInBackground() throws Exception {
 						AutoServisSim simulacia1;
 						AutoServisSim simulacia2;
-						for(int i = 0; i< 100 && !isCancelled(); i++) {
+						for(int i = 0; i< 10 && !isCancelled(); i++) {
 							simulacia1 = new AutoServisSim(0, true, i+1, 21);
 							simulacia2 = new AutoServisSim(0, true, 5, i+16);
 							simulacia1.vykonajPocetReplikacii(pocetReplikacii);
 							simulacia2.vykonajPocetReplikacii(pocetReplikacii);
 							publish(new Double[]{-1d,i+1d, simulacia1.getPriemernaDlzkaFrontuZakaznikov(true)});
-							publish(new Double[]{1d,i+16d, simulacia1.getPriemDlzkaVServise(true)});
+							publish(new Double[]{1d,i+16d, simulacia2.getPriemDlzkaVServise(true)});
 						}
 						return null;
 					}

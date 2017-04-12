@@ -84,7 +84,7 @@ public class SledovacieOkno extends JFrame implements PozorovatelSimulacie {
 	public SledovacieOkno() {
 		setTitle("Sledovac\u00ED m\u00F3d");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1200, 600);
+		setBounds(100, 100, 1116, 427);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -120,12 +120,12 @@ public class SledovacieOkno extends JFrame implements PozorovatelSimulacie {
 			public void stateChanged(ChangeEvent e) {
 				dlzkaSpanku = sliderPomerCasu.getValue();
 				if(dlzkaSpanku==5000) {
-					lblPomerRychlosti.setText("maximum");
+					lblPomerRychlosti.setText("Násobok rýchlosti: maximum");
 					if(simulacia!=null)
 					simulacia.nastavRychlost(0);
 					return;
 				} else {
-					lblPomerRychlosti.setText("nasobok rychlosti: "+5000d/(5000-dlzkaSpanku));
+					lblPomerRychlosti.setText("Násobok rýchlosti: "+String.format("%.2f",5000d/(5000-dlzkaSpanku)));
 				}
 				if(simulacia!=null)
 				simulacia.nastavRychlost(5000-dlzkaSpanku);
@@ -291,12 +291,8 @@ public class SledovacieOkno extends JFrame implements PozorovatelSimulacie {
 		contentPane.add(buttonPokracuj);
 		buttonPokracuj.setEnabled(false);
 		
-		JLabel lblAktulnyPomerRchlosti = new JLabel("Aktu\u00E1lny pomer r\u00FDchlosti: ");
-		lblAktulnyPomerRchlosti.setBounds(617, 11, 228, 14);
-		contentPane.add(lblAktulnyPomerRchlosti);
-		
-		lblPomerRychlosti = new JLabel("");
-		lblPomerRychlosti.setBounds(855, 11, 319, 14);
+		lblPomerRychlosti = new JLabel("N\u00E1sobok r\u00FDchlosti:");
+		lblPomerRychlosti.setBounds(594, 12, 319, 14);
 		contentPane.add(lblPomerRychlosti);
 		
 		lblCasSimulacie = new JLabel("");
@@ -401,17 +397,19 @@ public class SledovacieOkno extends JFrame implements PozorovatelSimulacie {
 		lblDoDielne.setText(Integer.toString(((AutoServisSim)simJadro).getPocetPracovnikovPreparkujucichAutaDoDielne()));
 		lblPrevezmucichAuta.setText(Integer.toString(((AutoServisSim)simJadro).getPocetPracovnikovPrevazajucichAutaOdZakaznikov()));
 		lblOpravujuci.setText(Integer.toString(((AutoServisSim)simJadro).getPocetPracovnikovOpravujucichAuta()));
-		lblCakanieVRade.setText(Double.toString(((AutoServisSim)simJadro).getIsCakaniaVRade(false)[0])+" ; "+
-				Double.toString(((AutoServisSim)simJadro).getIsCakaniaVRade(false)[1]));
-		lblCakanieNaOpravu.setText(Double.toString(((AutoServisSim)simJadro).getPriemernaDobaCakaniaNaOpravu(false)));
-		lblFrontNeopravenych.setText(Double.toString(((AutoServisSim)simJadro).getPriemernaDlzkaFrontuNeopravenychAut(false)));
-		lblFrontNeopravenychNaKonciDna.setText(Double.toString(((AutoServisSim)simJadro).getPriemernaDlzkaFrontuNeopravenychAutNaKonciDna(false)));
-		lblFrontOpravenych.setText(Double.toString(((AutoServisSim)simJadro).getPriemernaDlzkaFrontuOpravenychAut(false)));
-		lblFrontOpravenychNaKonciDna.setText(Double.toString(((AutoServisSim)simJadro).getPriemernaDlzkaFrontuOpravenychAutNaKonciDna(false)));
-		lblFrontZakaznikov.setText(Double.toString(((AutoServisSim)simJadro).getPriemernaDlzkaFrontuZakaznikov(false)));
-		lblFrontZakaznikovNaKonciDna.setText(Double.toString(((AutoServisSim)simJadro).getPriemernaDlzkaFrontuZakaznikovNaKonciDna(false)));
-		lblVolny1.setText(Double.toString(((AutoServisSim)simJadro).getPriemernyPocetVolnychPracovnikov1(false)));
-		lblVolny2.setText(Double.toString(((AutoServisSim)simJadro).getPriemernyPocetVolnychPracovnikov2(false)));
+		lblCakanieVRade.setText(String.format("%.2f", (((AutoServisSim)simJadro).getIsCakaniaVRade(false)[0]))+" ; "+
+				String.format("%.2f", (((AutoServisSim)simJadro).getIsCakaniaVRade(false)[1]))+" sekúnd");
+		lblCakanieNaOpravu.setText(String.format("%.2f", (((AutoServisSim)simJadro).getIsCakaniaNaOpravu(false)[0]))+" ; "+
+				String.format("%.2f", (((AutoServisSim)simJadro).getIsCakaniaNaOpravu(false)[1]))+" sekúnd");
+		
+		lblFrontNeopravenych.setText(String.format("%.2f", (((AutoServisSim)simJadro).getPriemernaDlzkaFrontuNeopravenychAut(false))));
+		lblFrontNeopravenychNaKonciDna.setText(String.format("%.2f", (((AutoServisSim)simJadro).getPriemernaDlzkaFrontuNeopravenychAutNaKonciDna(false))));
+		lblFrontOpravenych.setText(String.format("%.2f", (((AutoServisSim)simJadro).getPriemernaDlzkaFrontuOpravenychAut(false))));
+		lblFrontOpravenychNaKonciDna.setText(String.format("%.2f", (((AutoServisSim)simJadro).getPriemernaDlzkaFrontuOpravenychAutNaKonciDna(false))));
+		lblFrontZakaznikov.setText(String.format("%.2f", (((AutoServisSim)simJadro).getPriemernaDlzkaFrontuZakaznikov(false))));
+		lblFrontZakaznikovNaKonciDna.setText(String.format("%.2f", (((AutoServisSim)simJadro).getPriemernaDlzkaFrontuZakaznikovNaKonciDna(false))));
+		lblVolny1.setText(String.format("%.2f", (((AutoServisSim)simJadro).getPriemernyPocetVolnychPracovnikov1(false))));
+		lblVolny2.setText(String.format("%.2f", (((AutoServisSim)simJadro).getPriemernyPocetVolnychPracovnikov2(false))));
 		lblPocetPracovnikov1.setText(Integer.toString(((AutoServisSim)simJadro).getAktualnyPocetRobotnikov1()));
 		lblPocetPracovnikov2.setText(Integer.toString(((AutoServisSim)simJadro).getAktualnyPocetRobotnikov2()));
 		lblDlzkaFrontuAutCakajucichNaOpravu.setText(Integer.toString(((AutoServisSim)simJadro).getPocetPokazenychAutVoFronte()));

@@ -60,7 +60,7 @@ public class TurboOkno extends JFrame implements PozorovatelSimulacie {
 	public TurboOkno() {
 		setTitle("Turbo m\u00F3d");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 690, 406);
+		setBounds(100, 100, 690, 393);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -247,19 +247,18 @@ public class TurboOkno extends JFrame implements PozorovatelSimulacie {
 
 	@Override
 	public void refresh(SimulacneJadro simJadro) {
-		lblCakanieVRade.setText(Double.toString(((AutoServisSim)simJadro).getIsCakaniaVRade(true)[0])+" ; "+
-				Double.toString(((AutoServisSim)simJadro).getIsCakaniaVRade(true)[1]));
-		lblCakanieNaOpravu.setText(Double.toString(((AutoServisSim)simJadro).getIsCakaniaNaOpravu(true)[0])+" ; "+
-				Double.toString(((AutoServisSim)simJadro).getIsCakaniaNaOpravu(true)[1]));
-		lblFrontNeopravenych.setText(Double.toString(((AutoServisSim)simJadro).getPriemernaDlzkaFrontuNeopravenychAut(true)));
-		lblFrontNeopravenychNaKonciDna.setText(Double.toString(((AutoServisSim)simJadro).getPriemernaDlzkaFrontuNeopravenychAutNaKonciDna(true)));
-		lblFrontOpravenych.setText(Double.toString(((AutoServisSim)simJadro).getPriemernaDlzkaFrontuOpravenychAut(true)));
-		lblFrontOpravenychNaKonciDna.setText(Double.toString(((AutoServisSim)simJadro).getPriemernaDlzkaFrontuOpravenychAutNaKonciDna(true)));
-		lblFrontZakaznikov.setText(Double.toString(((AutoServisSim)simJadro).getPriemernaDlzkaFrontuZakaznikov(true)));
-		lblFrontZakaznikovNaKonciDna.setText(Double.toString(((AutoServisSim)simJadro).getPriemernaDlzkaFrontuZakaznikovNaKonciDna(true)));
-		lblVolny1.setText(Double.toString(((AutoServisSim)simJadro).getPriemernyPocetVolnychPracovnikov1(true)));
-		lblVolny2.setText(Double.toString(((AutoServisSim)simJadro).getPriemernyPocetVolnychPracovnikov2(true)));
-		
+		lblCakanieVRade.setText(String.format("%.2f",(((AutoServisSim)simJadro).getIsCakaniaVRade(true)[0]))+" ; "+
+				String.format("%.2f", (((AutoServisSim)simJadro).getIsCakaniaVRade(true)[1]))+" sekúnd");
+		lblCakanieNaOpravu.setText(String.format("%.2f", (((AutoServisSim)simJadro).getIsCakaniaNaOpravu(true)[0]))+" ; "+
+				String.format("%.2f", (((AutoServisSim)simJadro).getIsCakaniaNaOpravu(true)[1]))+" sekúnd");
+		lblFrontNeopravenych.setText(String.format("%.2f", (((AutoServisSim)simJadro).getPriemernaDlzkaFrontuNeopravenychAut(true))));
+		lblFrontNeopravenychNaKonciDna.setText(String.format("%.2f", (((AutoServisSim)simJadro).getPriemernaDlzkaFrontuNeopravenychAutNaKonciDna(true))));
+		lblFrontOpravenych.setText(String.format("%.2f", (((AutoServisSim)simJadro).getPriemernaDlzkaFrontuOpravenychAut(true))));
+		lblFrontOpravenychNaKonciDna.setText(String.format("%.2f", (((AutoServisSim)simJadro).getPriemernaDlzkaFrontuOpravenychAutNaKonciDna(true))));
+		lblFrontZakaznikov.setText(String.format("%.2f",(((AutoServisSim)simJadro).getPriemernaDlzkaFrontuZakaznikov(true))));
+		lblFrontZakaznikovNaKonciDna.setText(String.format("%.2f", (((AutoServisSim)simJadro).getPriemernaDlzkaFrontuZakaznikovNaKonciDna(true))));
+		lblVolny1.setText(String.format("%.2f", (((AutoServisSim)simJadro).getPriemernyPocetVolnychPracovnikov1(true))));
+		lblVolny2.setText(String.format("%.2f", (((AutoServisSim)simJadro).getPriemernyPocetVolnychPracovnikov2(true))));
 	}
 	public TurboOkno getOkno() {
 		return this;
